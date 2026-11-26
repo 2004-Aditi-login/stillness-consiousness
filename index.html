@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Stillness &amp; Awareness — Meditation &amp; Consciousness Studio</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at 20% 15%, #162040 0%, #0b1020 55%, #060913 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .serif-title {
+      font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    }
+    .glass-card {
+      background: rgba(17, 24, 46, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+    .thought-float {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease, border-color 0.3s ease;
+    }
+    .thought-dissolving {
+      transform: scale(0.86) translateY(-14px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    input[type="range"] {
+      accent-color: #e6b86a;
+    }
+    @keyframes subtlePulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+    .pulse-soft {
+      animation: subtlePulse 3.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-amber-400/30 selection:text-amber-100">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-5">
+    <!-- Top Header & Navigation -->
+    <header class="glass-card rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-300/25 via-teal-300/20 to-indigo-400/25 border border-amber-300/30 flex items-center justify-center shrink-0">
+          <i data-lucide="sparkles" class="w-5 h-5 text-amber-300"></i>
+        </div>
+        <div class="min-w-0">
+          <h1 class="serif-title text-base sm:text-lg font-semibold tracking-tight text-slate-100 truncate">
+            Stillness &amp; Awareness
+          </h1>
+          <p class="text-xs text-slate-400 truncate">Meditation, Thought Process &amp; Consciousness Studio</p>
+        </div>
+      </div>
+
+      <!-- Primary Mode Tabs -->
+      <nav class="flex items-center gap-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800/80 overflow-x-auto max-w-full" aria-label="Studio Sections">
+        <button id="tab-meditation" type="button" data-tab="meditation"
+          class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 whitespace-nowrap bg-amber-400/15 text-amber-200 border border-amber-300/30">
+          <i data-lucide="wind" class="w-4 h-4"></i>
+          <span>Meditation</span>
+        </button>
+        <button id="tab-thoughts" type="button" data-tab="thoughts"
+          class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 whitespace-nowrap text-slate-300 hover:text-white border border-transparent">
+          <i data-lucide="cloud" class="w-4 h-4"></i>
+          <span>Thought Process</span>
+        </button>
+        <button id="tab-consciousness" type="button" data-tab="consciousness"
+          class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 whitespace-nowrap text-slate-300 hover:text-white border border-transparent">
+          <i data-lucide="orbit" class="w-4 h-4"></i>
+          <span>Consciousness</span>
+        </button>
+      </nav>
+
+      <!-- Sound & Quick Stats -->
+      <div class="flex items-center gap-2">
+        <button id="sound-toggle-btn" type="button"
+          class="px-3 py-1.5 rounded-xl text-xs font-medium border border-slate-700/80 bg-slate-900/70 hover:bg-slate-800 text-slate-200 flex items-center gap-1.5 transition-colors">
+          <i id="sound-icon" data-lucide="volume-x" class="w-4 h-4 text-slate-400"></i>
+          <span id="sound-label">Sound Off</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Toast Notification -->
+    <div id="toast-banner" class="hidden fixed bottom-5 right-5 z-50 glass-card border-teal-400/40 px-4 py-2.5 rounded-xl shadow-2xl text-xs sm:text-sm text-teal-100 flex items-center gap-2">
+      <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-300 shrink-0"></i>
+      <span id="toast-text">Saved</span>
+    </div>
+
+    <!-- SECTION 1: MEDITATION SANCTUARY -->
+    <main id="view-meditation" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      <!-- Left: Breathing Mandala Canvas -->
+      <section class="lg:col-span-7 glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center justify-between gap-4">
+        <div class="w-full flex items-center justify-between">
+          <div>
+            <span class="text-[11px] uppercase tracking-widest text-amber-300/80 font-semibold">Guided Breath &amp; Stillness</span>
+            <h2 id="meditation-mode-heading" class="serif-title text-xl font-semibold text-slate-100 mt-0.5">Box Breathing (4-4-4-4)</h2>
+          </div>
+          <div class="text-right">
+            <div class="text-xs text-slate-400">Remaining</div>
+            <div id="timer-display" class="text-xl font-mono font-semibold text-teal-200">05:00</div>
+          </div>
+        </div>
+
+        <!-- Live Mandala Canvas -->
+        <div class="relative w-full max-w-[380px] aspect-square flex items-center justify-center my-1">
+          <canvas id="mandala-canvas" class="w-full h-full rounded-full"></canvas>
+          <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-6">
+            <span id="breath-phase-label" class="text-lg sm:text-xl font-semibold tracking-wide text-amber-100">Ready</span>
+            <span id="breath-phase-sub" class="text-xs sm:text-sm text-slate-300 mt-1">Press Start to begin</span>
+            <span id="breath-countdown" class="text-2xl font-mono font-bold text-teal-300 mt-2"></span>
+          </div>
+        </div>
+
+        <!-- Transport Controls -->
+        <div class="w-full flex flex-wrap items-center justify-center gap-3">
+          <button id="med-start-btn" type="button"
+            class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-300 text-slate-950 font-semibold text-sm hover:brightness-105 active:scale-[0.98] transition-all flex items-center gap-2 shadow-lg shadow-amber-500/10">
+            <i id="med-start-icon" data-lucide="play" class="w-4 h-4"></i>
+            <span id="med-start-text">Start Session</span>
+          </button>
+          <button id="med-reset-btn" type="button"
+            class="px-4 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 font-medium text-sm border border-slate-700/70 transition-colors flex items-center gap-2">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>Reset</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Right: Cadence, Soundscape & Live Session Metrics -->
+      <aside class="lg:col-span-5 flex flex-col gap-5">
+        <div class="glass-card rounded-2xl p-5 flex flex-col gap-4">
+          <h3 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-amber-300"></i>
+            <span>Breathing Pattern</span>
+          </h3>
+          <div id="pattern-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button type="button" data-pattern="box" class="pattern-btn text-left p-3 rounded-xl border border-amber-300/50 bg-amber-400/10 transition-all">
+              <div class="text-xs font-semibold text-amber-200">Box Breathing</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">4s In · 4s Hold · 4s Out · 4s Rest</div>
+            </button>
+            <button type="button" data-pattern="calm478" class="pattern-btn text-left p-3 rounded-xl border border-slate-700/70 bg-slate-900/50 hover:border-slate-500 transition-all">
+              <div class="text-xs font-semibold text-slate-200">4-7-8 Deep Calm</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">4s In · 7s Hold · 8s Exhale</div>
+            </button>
+            <button type="button" data-pattern="coherent" class="pattern-btn text-left p-3 rounded-xl border border-slate-700/70 bg-slate-900/50 hover:border-slate-500 transition-all">
+              <div class="text-xs font-semibold text-slate-200">Resonant Coherence</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">5.5s In · 5.5s Exhale</div>
+            </button>
+            <button type="button" data-pattern="open" class="pattern-btn text-left p-3 rounded-xl border border-slate-700/70 bg-slate-900/50 hover:border-slate-500 transition-all">
+              <div class="text-xs font-semibold text-slate-200">Open Awareness</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">6s Gentle Rise · 6s Release</div>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-1">
+            <div>
+              <label for="duration-select" class="block text-xs text-slate-400 mb-1.5">Session Length</label>
+              <select id="duration-select" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-amber-300">
+                <option value="120">2 minutes</option>
+                <option value="300" selected>5 minutes</option>
+                <option value="600">10 minutes</option>
+                <option value="900">15 minutes</option>
+              </select>
+            </div>
+            <div>
+              <label for="tone-select" class="block text-xs text-slate-400 mb-1.5">Ambient Tone</label>
+              <select id="tone-select" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-amber-300">
+                <option value="432" selected>432 Hz Warm Drone</option>
+                <option value="528">528 Hz Clarity Pad</option>
+                <option value="theta">Theta 6 Hz Gentle Pulse</option>
+                <option value="chime">Chimes Only</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Session Metrics -->
+        <div class="glass-card rounded-2xl p-5 grid grid-cols-3 gap-3 text-center">
+          <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800/80">
+            <div class="text-[11px] text-slate-400">Breaths</div>
+            <div id="stat-breaths" class="text-lg font-semibold text-amber-200 mt-0.5">0</div>
+          </div>
+          <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800/80">
+            <div class="text-[11px] text-slate-400">Witnessed</div>
+            <div id="stat-thoughts" class="text-lg font-semibold text-teal-200 mt-0.5">0</div>
+          </div>
+          <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800/80">
+            <div class="text-[11px] text-slate-400">Stillness</div>
+            <div id="stat-stillness" class="text-lg font-semibold text-violet-200 mt-0.5">65%</div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-4 text-xs text-slate-300 leading-relaxed">
+          <span class="font-semibold text-amber-200">Practice Cue:</span>
+          When attention drifts into a thought, notice it without judgment, let the exhale soften your shoulders, and return to the expanding circle.
+        </div>
+      </aside>
+    </main>
+
+    <!-- SECTION 2: THOUGHT PROCESS OBSERVER -->
+    <section id="view-thoughts" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      <div class="lg:col-span-5 glass-card rounded-2xl p-5 flex flex-col gap-4">
+        <div>
+          <span class="text-[11px] uppercase tracking-widest text-teal-300/80 font-semibold">Metacognitive Sandbox</span>
+          <h2 class="serif-title text-xl font-semibold text-slate-100 mt-0.5">Observe Your Thought Process</h2>
+          <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+            In meditation, you are not the stream of thoughts—you are the awareness watching them pass. Place a thought into the field, label its nature, and let it dissolve.
+          </p>
+        </div>
+
+        <form id="thought-form" class="flex flex-col gap-3">
+          <div>
+            <label for="thought-input" class="block text-xs text-slate-300 mb-1.5">What thought is arising right now?</label>
+            <textarea id="thought-input" rows="2" maxlength="160" placeholder="e.g., I keep replaying yesterday's conversation..."
+              class="w-full bg-slate-950/70 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-teal-300 resize-none"></textarea>
+          </div>
+          <div class="flex items-center justify-between gap-2">
+            <select id="thought-category" class="bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-teal-300">
+              <option value="Planning">Planning</option>
+              <option value="Worry">Worry / Future</option>
+              <option value="Memory">Memory / Past</option>
+              <option value="Judgment">Self-Judgment</option>
+              <option value="Sensation">Body Sensation</option>
+            </select>
+            <button type="submit"
+              class="px-4 py-2 rounded-xl bg-teal-400 text-slate-950 font-semibold text-xs sm:text-sm hover:brightness-105 transition-all flex items-center gap-1.5">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>Place in Awareness</span>
+            </button>
+          </div>
+        </form>
+
+        <div>
+          <div class="text-[11px] text-slate-400 mb-2">Or test with a common thought pattern:</div>
+          <div id="sample-thoughts" class="flex flex-wrap gap-1.5">
+            <button type="button" data-text="What if I'm not moving fast enough?" data-cat="Worry" class="sample-thought-btn text-[11px] px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/70 transition-colors">Future worry</button>
+            <button type="button" data-text="I need to organize tomorrow's tasks." data-cat="Planning" class="sample-thought-btn text-[11px] px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/70 transition-colors">To-do planning</button>
+            <button type="button" data-text="Why did I say that earlier?" data-cat="Memory" class="sample-thought-btn text-[11px] px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/70 transition-colors">Past replay</button>
+            <button type="button" data-text="My mind is too noisy to meditate." data-cat="Judgment" class="sample-thought-btn text-[11px] px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/70 transition-colors">Self-critique</button>
+          </div>
+        </div>
+
+        <!-- 4-Step Loop -->
+        <div class="bg-slate-950/60 rounded-xl p-3.5 border border-slate-800/80">
+          <div class="text-xs font-semibold text-slate-200 mb-2">The 4-Stage Thought Observation Loop</div>
+          <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
+            <div class="p-2 rounded-lg bg-slate-900/70 border border-slate-800">1. <span class="text-amber-200 font-medium">Arising</span> — Impulse forms</div>
+            <div class="p-2 rounded-lg bg-slate-900/70 border border-slate-800">2. <span class="text-teal-200 font-medium">Noticing</span> — Attention wakes</div>
+            <div class="p-2 rounded-lg bg-slate-900/70 border border-slate-800">3. <span class="text-violet-200 font-medium">Labeling</span> — Distance appears</div>
+            <div class="p-2 rounded-lg bg-slate-900/70 border border-slate-800">4. <span class="text-slate-100 font-medium">Dissolving</span> — Space remains</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Active Awareness Field -->
+      <div class="lg:col-span-7 glass-card rounded-2xl p-5 flex flex-col gap-4 min-h-[420px]">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-sm font-semibold text-slate-100">Active Awareness Space</h3>
+            <p class="text-xs text-slate-400">Label a thought to step back from it, then release it into stillness.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-teal-200">
+              Stillness: <strong id="thought-stillness-readout">65%</strong>
+            </span>
+            <button id="clear-thoughts-btn" type="button"
+              class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+              Dissolve All
+            </button>
+          </div>
+        </div>
+
+        <!-- Stillness Progress Bar -->
+        <div class="w-full h-2 rounded-full bg-slate-900 overflow-hidden border border-slate-800">
+          <div id="stillness-bar" class="h-full bg-gradient-to-r from-amber-300 via-teal-300 to-violet-300 transition-all duration-500" style="width: 65%"></div>
+        </div>
+
+        <!-- Thought Cards Container -->
+        <div id="thought-stream" class="flex flex-col gap-2.5 flex-1"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: SPECTRUM OF CONSCIOUSNESS -->
+    <section id="view-consciousness" class="hidden flex flex-col gap-5">
+      <div class="glass-card rounded-2xl p-5 sm:p-6 flex flex-col gap-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="text-[11px] uppercase tracking-widest text-violet-300/80 font-semibold">Interactive Depth Model</span>
+            <h2 class="serif-title text-xl sm:text-2xl font-semibold text-slate-100 mt-0.5">From Thought Process to Supreme Consciousness</h2>
+          </div>
+          <div class="text-xs px-3 py-1.5 rounded-xl bg-slate-950/70 border border-slate-800 text-amber-200 font-medium">
+            Depth: <span id="depth-percent-label">35%</span>
+          </div>
+        </div>
+
+        <!-- Awareness Depth Slider -->
+        <div class="flex flex-col gap-2">
+          <input id="consciousness-slider" type="range" min="0" max="100" value="35" class="w-full cursor-pointer" aria-label="Awareness Depth" />
+          <div class="grid grid-cols-4 text-[11px] sm:text-xs text-slate-400">
+            <button type="button" data-depth="12" class="stage-jump text-left hover:text-amber-200 transition-colors">1. Thought Process</button>
+            <button type="button" data-depth="40" class="stage-jump text-center hover:text-teal-200 transition-colors">2. Consciousness</button>
+            <button type="button" data-depth="70" class="stage-jump text-center hover:text-violet-200 transition-colors">3. Meditation</button>
+            <button type="button" data-depth="96" class="stage-jump text-right hover:text-amber-100 transition-colors">4. Supreme Consciousness</button>
+          </div>
+        </div>
+
+        <!-- Live Consciousness Wave & Field Canvas -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-7 bg-slate-950/70 rounded-2xl border border-slate-800/90 p-3 flex flex-col justify-between min-h-[240px]">
+            <canvas id="wave-canvas" class="w-full h-52 sm:h-60 rounded-xl"></canvas>
+            <div class="flex items-center justify-between px-2 pt-2 text-[11px] text-slate-400">
+              <span id="wave-caption-left">Wave Pattern: Coherent Alpha</span>
+              <span id="wave-caption-right">Mental Noise: Moderate</span>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 bg-slate-950/60 rounded-2xl border border-slate-800/90 p-5 flex flex-col justify-between gap-4">
+            <div>
+              <div id="stage-badge" class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-teal-400/15 text-teal-200 border border-teal-300/30">
+                Witnessing Awareness
+              </div>
+              <h3 id="stage-title" class="serif-title text-xl font-semibold text-slate-100 mt-2.5">Consciousness (The Observer)</h3>
+              <p id="stage-desc" class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+                Awareness steps back from automatic thinking. You recognize thoughts, emotions, and sensations as events appearing within a wider field of knowing.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 text-xs">
+              <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                <div class="text-slate-400 text-[11px]">Dominant Rhythm</div>
+                <div id="stage-rhythm" class="font-semibold text-amber-200 mt-0.5">Alpha (8–12 Hz)</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                <div class="text-slate-400 text-[11px]">Ego Boundary</div>
+                <div id="stage-ego" class="font-semibold text-teal-200 mt-0.5">Softening</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                <div class="text-slate-400 text-[11px]">Thought Density</div>
+                <div id="stage-density" class="font-semibold text-violet-200 mt-0.5">Slowing</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                <div class="text-slate-400 text-[11px]">Inner Quality</div>
+                <div id="stage-quality" class="font-semibold text-slate-100 mt-0.5">Spacious Clarity</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Stage Reference Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button type="button" data-depth="12" class="stage-card text-left glass-card rounded-2xl p-4 hover:border-amber-300/40 transition-all">
+          <div class="text-xs font-semibold text-amber-300">01 · Thought Process</div>
+          <div class="text-sm font-semibold text-slate-100 mt-1">Analytical Mind</div>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Sequential reasoning, memory recall, planning, and inner dialogue (Beta activity).</p>
+        </button>
+        <button type="button" data-depth="40" class="stage-card text-left glass-card rounded-2xl p-4 hover:border-teal-300/40 transition-all">
+          <div class="text-xs font-semibold text-teal-300">02 · Consciousness</div>
+          <div class="text-sm font-semibold text-slate-100 mt-1">Witnessing Self</div>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Awake presence noticing thoughts without being carried away by them (Alpha).</p>
+        </button>
+        <button type="button" data-depth="70" class="stage-card text-left glass-card rounded-2xl p-4 hover:border-violet-300/40 transition-all">
+          <div class="text-xs font-semibold text-violet-300">03 · Meditation</div>
+          <div class="text-sm font-semibold text-slate-100 mt-1">Deep Absorption</div>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Sustained single-pointed stillness where mental chatter quiets into flow (Theta).</p>
+        </button>
+        <button type="button" data-depth="96" class="stage-card text-left glass-card rounded-2xl p-4 hover:border-amber-200/50 transition-all">
+          <div class="text-xs font-semibold text-amber-200">04 · Supreme Consciousness</div>
+          <div class="text-sm font-semibold text-slate-100 mt-1">Non-Dual Pure Awareness</div>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Boundless, silent awareness beyond subject-object separation (Turiya / Unity).</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- Bottom: Session Reflection Log -->
+    <footer class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col gap-3">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <i data-lucide="book-open" class="w-4 h-4 text-amber-300"></i>
+          <h3 class="text-sm font-semibold text-slate-100">Reflection &amp; Insight Log</h3>
+        </div>
+        <span id="journal-count" class="text-xs text-slate-400">0 entries saved</span>
+      </div>
+      <form id="journal-form" class="flex flex-col sm:flex-row gap-2.5">
+        <input id="journal-input" type="text" maxlength="200" placeholder="Capture a post-meditation insight or observation about your mind..."
+          class="flex-1 bg-slate-950/70 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-amber-300" />
+        <button type="submit"
+          class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-200 font-medium text-xs sm:text-sm border border-slate-700 transition-colors whitespace-nowrap">
+          Save Insight
+        </button>
+      </form>
+      <div id="journal-list" class="flex flex-col gap-2"></div>
+    </footer>
+  </div>
+
+  <script>
+    // ---------- State ----------
+    const PATTERNS = {
+      box: {
+        name: 'Box Breathing (4-4-4-4)',
+        phases: [
+          { label: 'Inhale', sub: 'Draw breath in gently', seconds: 4, scaleFrom: 0.42, scaleTo: 0.92 },
+          { label: 'Hold', sub: 'Rest in fullness', seconds: 4, scaleFrom: 0.92, scaleTo: 0.92 },
+          { label: 'Exhale', sub: 'Release tension slowly', seconds: 4, scaleFrom: 0.92, scaleTo: 0.42 },
+          { label: 'Rest', sub: 'Pause in quiet space', seconds: 4, scaleFrom: 0.42, scaleTo: 0.42 }
+        ]
+      },
+      calm478: {
+        name: '4-7-8 Deep Calm',
+        phases: [
+          { label: 'Inhale', sub: 'Breathe in through the nose', seconds: 4, scaleFrom: 0.42, scaleTo: 0.92 },
+          { label: 'Hold', sub: 'Soften into stillness', seconds: 7, scaleFrom: 0.92, scaleTo: 0.92 },
+          { label: 'Exhale', sub: 'Long, slow release', seconds: 8, scaleFrom: 0.92, scaleTo: 0.42 }
+        ]
+      },
+      coherent: {
+        name: 'Resonant Coherence (5.5-5.5)',
+        phases: [
+          { label: 'Inhale', sub: 'Smooth, steady expansion', seconds: 5.5, scaleFrom: 0.44, scaleTo: 0.9 },
+          { label: 'Exhale', sub: 'Effortless letting go', seconds: 5.5, scaleFrom: 0.9, scaleTo: 0.44 }
+        ]
+      },
+      open: {
+        name: 'Open Awareness (6-6)',
+        phases: [
+          { label: 'Rising', sub: 'Notice breath & space', seconds: 6, scaleFrom: 0.46, scaleTo: 0.88 },
+          { label: 'Settling', sub: 'Rest as pure awareness', seconds: 6, scaleFrom: 0.88, scaleTo: 0.46 }
+        ]
+      }
+    };
+
+    const CONSCIOUSNESS_STAGES = [
+      {
+        max: 25,
+        badge: 'Beta · Analytical Mind',
+        title: 'Thought Process (Active Mind)',
+        desc: 'Attention is woven into sequential thoughts, planning, memories, and internal commentary. Thoughts feel close and urgent.',
+        rhythm: 'Beta (13–30 Hz)',
+        ego: 'Defined & Active',
+        density: 'High / Rapid',
+        quality: 'Problem-Solving',
+        waveLeft: 'Wave Pattern: Fast Overlapping Beta',
+        waveRight: 'Mental Noise: High'
+      },
+      {
+        max: 55,
+        badge: 'Alpha · Witnessing Awareness',
+        title: 'Consciousness (The Observer)',
+        desc: 'Awareness steps back from automatic thinking. You recognize thoughts and sensations as passing events inside a wider field of knowing.',
+        rhythm: 'Alpha (8–12 Hz)',
+        ego: 'Softening',
+        density: 'Slowing',
+        quality: 'Spacious Clarity',
+        waveLeft: 'Wave Pattern: Coherent Alpha',
+        waveRight: 'Mental Noise: Moderate'
+      },
+      {
+        max: 82,
+        badge: 'Theta · Deep Absorption',
+        title: 'Meditation (Dhyana & Stillness)',
+        desc: 'Breathing and attention unify. The gap between thoughts widens into calm, luminous silence where effort drops away.',
+        rhythm: 'Theta (4–7 Hz)',
+        ego: 'Transparent',
+        density: 'Sparse Ripples',
+        quality: 'Deep Tranquility',
+        waveLeft: 'Wave Pattern: Deep Harmonic Theta',
+        waveRight: 'Mental Noise: Minimal'
+      },
+      {
+        max: 100,
+        badge: 'Turiya · Non-Dual Unity',
+        title: 'Supreme Consciousness (Pure Awareness)',
+        desc: 'The boundary between observer and observed dissolves. Only boundless, silent, self-luminous awareness remains—unchanging beneath all experience.',
+        rhythm: 'Unified / Beyond Waves',
+        ego: 'Dissolved (Non-Dual)',
+        density: 'Silent Stillness',
+        quality: 'Boundless Unity',
+        waveLeft: 'Field Pattern: Unified Stillness',
+        waveRight: 'Mental Noise: Silent'
+      }
+    ];
+
+    const state = {
+      activeTab: 'meditation',
+      patternKey: 'box',
+      durationSec: 300,
+      remainingSec: 300,
+      isRunning: false,
+      phaseIndex: 0,
+      phaseElapsed: 0,
+      breathsCompleted: 0,
+      thoughtsWitnessed: 0,
+      stillnessPct: 65,
+      soundEnabled: false,
+      toneMode: '432',
+      consciousnessDepth: 35,
+      thoughts: [
+        { id: 1, text: 'I should double-check my schedule after this.', category: 'Planning', witnessed: false },
+        { id: 2, text: 'Notice how quiet the room feels right now.', category: 'Sensation', witnessed: true }
+      ],
+      journal: []
+    };
+
+    try {
+      const saved = localStorage.getItem('stillness_studio_journal');
+      if (saved) state.journal = JSON.parse(saved);
+    } catch (e) {}
+
+    // ---------- Audio Engine (Web Audio API) ----------
+    let audioCtx = null;
+    let droneOsc1 = null;
+    let droneOsc2 = null;
+    let droneGain = null;
+
+    function ensureAudio() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function stopDrone() {
+      try {
+        if (droneGain && audioCtx) {
+          droneGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.2);
+        }
+        setTimeout(() => {
+          if (droneOsc1) { try { droneOsc1.stop(); } catch (_) {} droneOsc1 = null; }
+          if (droneOsc2) { try { droneOsc2.stop(); } catch (_) {} droneOsc2 = null; }
+        }, 250);
+      } catch (_) {}
+    }
+
+    function startDrone() {
+      stopDrone();
+      if (!state.soundEnabled || state.toneMode === 'chime') return;
+      ensureAudio();
+      if (!audioCtx) return;
+
+      const now = audioCtx.currentTime;
+      droneGain = audioCtx.createGain();
+      droneGain.gain.setValueAtTime(0.0001, now);
+      droneGain.gain.setTargetAtTime(0.045, now, 0.6);
+      droneGain.connect(audioCtx.destination);
+
+      droneOsc1 = audioCtx.createOscillator();
+      droneOsc2 = audioCtx.createOscillator();
+      droneOsc1.type = 'sine';
+      droneOsc2.type = 'sine';
+
+      if (state.toneMode === '432') {
+        droneOsc1.frequency.setValueAtTime(216, now);
+        droneOsc2.frequency.setValueAtTime(432, now);
+      } else if (state.toneMode === '528') {
+        droneOsc1.frequency.setValueAtTime(264, now);
+        droneOsc2.frequency.setValueAtTime(528, now);
+      } else {
+        droneOsc1.frequency.setValueAtTime(180, now);
+        droneOsc2.frequency.setValueAtTime(186, now);
+      }
+
+      droneOsc1.connect(droneGain);
+      droneOsc2.connect(droneGain);
+      droneOsc1.start();
+      droneOsc2.start();
+    }
+
+    function playChime(freq = 528) {
+      if (!state.soundEnabled) return;
+      ensureAudio();
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.exponentialRampToValueAtTime(0.07, now + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 1.85);
+    }
+
+    // ---------- Toast ----------
+    let toastTimer = null;
+    function showToast(msg) {
+      const banner = document.getElementById('toast-banner');
+      document.getElementById('toast-text').textContent = msg;
+      banner.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => banner.classList.add('hidden'), 2600);
+    }
+
+    // ---------- Tab Switching ----------
+    function setTab(tab) {
+      state.activeTab = tab;
+      ['meditation', 'thoughts', 'consciousness'].forEach(t => {
+        const view = document.getElementById(`view-${t}`);
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tab) {
+          view.classList.remove('hidden');
+          btn.className = 'tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 whitespace-nowrap bg-amber-400/15 text-amber-200 border border-amber-300/30';
+        } else {
+          view.classList.add('hidden');
+          btn.className = 'tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 whitespace-nowrap text-slate-300 hover:text-white border border-transparent';
+        }
+      });
+      if (tab === 'consciousness') resizeWaveCanvas();
+      if (tab === 'meditation') resizeMandalaCanvas();
+    }
+
+    // ---------- Meditation Timer & Mandala ----------
+    const mandalaCanvas = document.getElementById('mandala-canvas');
+    const mandalaCtx = mandalaCanvas.getContext('2d');
+    const particles = Array.from({ length: 42 }, (_, i) => ({
+      angle: (Math.PI * 2 * i) / 42,
+      radiusOffset: 0.65 + (i % 5) * 0.08,
+      speed: 0.003 + (i % 4) * 0.0015,
+      size: 1.5 + (i % 3) * 0.8
+    }));
+
+    function resizeMandalaCanvas() {
+      const rect = mandalaCanvas.getBoundingClientRect();
+      if (!rect.width) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      mandalaCanvas.width = rect.width * dpr;
+      mandalaCanvas.height = rect.height * dpr;
+      mandalaCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function formatTime(sec) {
+      const s = Math.max(0, Math.ceil(sec));
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return `${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}`;
+    }
+
+    function updateMeditationUI(scaleFactor = 0.52) {
+      document.getElementById('timer-display').textContent = formatTime(state.remainingSec);
+      document.getElementById('stat-breaths').textContent = state.breathsCompleted;
+      document.getElementById('stat-thoughts').textContent = state.thoughtsWitnessed;
+      document.getElementById('stat-stillness').textContent = `${state.stillnessPct}%`;
+
+      const pattern = PATTERNS[state.patternKey];
+      const phase = pattern.phases[state.phaseIndex];
+      const phaseLabel = document.getElementById('breath-phase-label');
+      const phaseSub = document.getElementById('breath-phase-sub');
+      const countdown = document.getElementById('breath-countdown');
+
+      if (!state.isRunning && state.remainingSec === state.durationSec) {
+        phaseLabel.textContent = 'Ready';
+        phaseSub.textContent = 'Press Start to begin';
+        countdown.textContent = '';
+      } else if (!state.isRunning) {
+        phaseLabel.textContent = 'Paused';
+        phaseSub.textContent = 'Resume when ready';
+        countdown.textContent = '';
+      } else {
+        phaseLabel.textContent = phase.label;
+        phaseSub.textContent = phase.sub;
+        countdown.textContent = `${Math.max(1, Math.ceil(phase.seconds - state.phaseElapsed))}s`;
+      }
+
+      drawMandala(scaleFactor);
+    }
+
+    function drawMandala(scale) {
+      const w = mandalaCanvas.clientWidth;
+      const h = mandalaCanvas.clientHeight;
+      if (!w || !h) return;
+      const cx = w / 2;
+      const cy = h / 2;
+      const maxR = Math.min(cx, cy) - 10;
+
+      mandalaCtx.clearRect(0, 0, w, h);
+
+      mandalaCtx.beginPath();
+      mandalaCtx.arc(cx, cy, maxR, 0, Math.PI * 2);
+      mandalaCtx.strokeStyle = 'rgba(148, 163, 184, 0.14)';
+      mandalaCtx.lineWidth = 1.5;
+      mandalaCtx.stroke();
+
+      const coreR = maxR * scale;
+      const grad = mandalaCtx.createRadialGradient(cx, cy, coreR * 0.15, cx, cy, coreR);
+      grad.addColorStop(0, 'rgba(230, 184, 106, 0.34)');
+      grad.addColorStop(0.55, 'rgba(94, 234, 212, 0.18)');
+      grad.addColorStop(1, 'rgba(167, 139, 250, 0.03)');
+
+      mandalaCtx.beginPath();
+      mandalaCtx.arc(cx, cy, coreR, 0, Math.PI * 2);
+      mandalaCtx.fillStyle = grad;
+      mandalaCtx.fill();
+
+      const petals = 12;
+      mandalaCtx.save();
+      mandalaCtx.translate(cx, cy);
+      mandalaCtx.rotate(performance.now() * 0.00018);
+      for (let i = 0; i < petals; i++) {
+        const a = (Math.PI * 2 * i) / petals;
+        mandalaCtx.beginPath();
+        mandalaCtx.ellipse(
+          Math.cos(a) * coreR * 0.45,
+          Math.sin(a) * coreR * 0.45,
+          coreR * 0.48,
+          coreR * 0.19,
+          a,
+          0,
+          Math.PI * 2
+        );
+        mandalaCtx.strokeStyle = 'rgba(230, 184, 106, 0.25)';
+        mandalaCtx.lineWidth = 1;
+        mandalaCtx.stroke();
+      }
+      mandalaCtx.restore();
+
+      particles.forEach((p, idx) => {
+        p.angle += p.speed * (state.isRunning ? 1.15 : 0.45);
+        const r = coreR * p.radiusOffset + Math.sin(performance.now() * 0.001 + idx) * 4;
+        const px = cx + Math.cos(p.angle) * r;
+        const py = cy + Math.sin(p.angle) * r;
+        mandalaCtx.beginPath();
+        mandalaCtx.arc(px, py, p.size, 0, Math.PI * 2);
+        mandalaCtx.fillStyle = idx % 2 === 0 ? 'rgba(94, 234, 212, 0.7)' : 'rgba(230, 184, 106, 0.75)';
+        mandalaCtx.fill();
+      });
+    }
+
+    // ---------- Consciousness Wave Canvas ----------
+    const waveCanvas = document.getElementById('wave-canvas');
+    const waveCtx = waveCanvas.getContext('2d');
+
+    function resizeWaveCanvas() {
+      const rect = waveCanvas.getBoundingClientRect();
+      if (!rect.width) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      waveCanvas.width = rect.width * dpr;
+      waveCanvas.height = rect.height * dpr;
+      waveCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function drawConsciousnessWaves(t) {
+      const w = waveCanvas.clientWidth;
+      const h = waveCanvas.clientHeight;
+      if (!w || !h) return;
+      waveCtx.clearRect(0, 0, w, h);
+
+      const depth = state.consciousnessDepth / 100;
+      const cy = h / 2;
+
+      const aura = waveCtx.createRadialGradient(w / 2, cy, 8, w / 2, cy, w * (0.25 + depth * 0.4));
+      aura.addColorStop(0, `rgba(230, 184, 106, ${0.08 + depth * 0.25})`);
+      aura.addColorStop(0.6, `rgba(94, 234, 212, ${0.05 + depth * 0.1})`);
+      aura.addColorStop(1, 'rgba(11, 16, 32, 0)');
+      waveCtx.fillStyle = aura;
+      waveCtx.fillRect(0, 0, w, h);
+
+      const layers = 4;
+      for (let l = 0; l < layers; l++) {
+        waveCtx.beginPath();
+        const freq = (1 - depth * 0.85) * (0.045 + l * 0.015) + 0.008;
+        const amp = (1 - depth * 0.92) * (24 + l * 7) + 2;
+        const speed = (1 - depth * 0.82) * 0.004 + 0.0008;
+
+        for (let x = 0; x <= w; x += 4) {
+          const chatter = depth < 0.3 ? Math.sin(x * 0.11 + t * 0.006 + l) * (8 * (1 - depth * 3)) : 0;
+          const y = cy + Math.sin(x * freq + t * speed + l * 1.4) * amp + chatter;
+          if (x === 0) waveCtx.moveTo(x, y);
+          else waveCtx.lineTo(x, y);
+        }
+
+        const colors = [
+          `rgba(230, 184, 106, ${0.35 + depth * 0.45})`,
+          `rgba(94, 234, 212, ${0.28 + depth * 0.3})`,
+          `rgba(167, 139, 250, ${0.25 + depth * 0.25})`,
+          `rgba(241, 245, 249, ${0.15 + depth * 0.4})`
+        ];
+        waveCtx.strokeStyle = colors[l];
+        waveCtx.lineWidth = 1.6 + depth * 0.6;
+        waveCtx.stroke();
+      }
+    }
+
+    function updateConsciousnessView(depth) {
+      state.consciousnessDepth = Number(depth);
+      document.getElementById('depth-percent-label').textContent = `${state.consciousnessDepth}%`;
+      document.getElementById('consciousness-slider').value = state.consciousnessDepth;
+
+      const stage = CONSCIOUSNESS_STAGES.find(s => state.consciousnessDepth <= s.max) || CONSCIOUSNESS_STAGES[3];
+      document.getElementById('stage-badge').textContent = stage.badge;
+      document.getElementById('stage-title').textContent = stage.title;
+      document.getElementById('stage-desc').textContent = stage.desc;
+      document.getElementById('stage-rhythm').textContent = stage.rhythm;
+      document.getElementById('stage-ego').textContent = stage.ego;
+      document.getElementById('stage-density').textContent = stage.density;
+      document.getElementById('stage-quality').textContent = stage.quality;
+      document.getElementById('wave-caption-left').textContent = stage.waveLeft;
+      document.getElementById('wave-caption-right').textContent = stage.waveRight;
+    }
+
+    // ---------- Thought Stream ----------
+    function renderThoughts() {
+      const container = document.getElementById('thought-stream');
+      document.getElementById('thought-stillness-readout').textContent = `${state.stillnessPct}%`;
+      document.getElementById('stillness-bar').style.width = `${state.stillnessPct}%`;
+      document.getElementById('stat-thoughts').textContent = state.thoughtsWitnessed;
+      document.getElementById('stat-stillness').textContent = `${state.stillnessPct}%`;
+
+      if (state.thoughts.length === 0) {
+        container.innerHTML = `
+          <div class="flex-1 flex flex-col items-center justify-center text-center py-10 px-4 border border-dashed border-slate-700/80 rounded-2xl bg-slate-950/30">
+            <p class="text-sm font-medium text-teal-200">Clear Sky Awareness</p>
+            <p class="text-xs text-slate-400 mt-1 max-w-sm">No active thoughts in the field. Notice the quiet space before the next thought arises.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = state.thoughts.map(t => `
+        <div id="thought-card-${t.id}" class="thought-float rounded-xl p-3.5 border ${t.witnessed ? 'border-teal-400/35 bg-teal-950/20' : 'border-amber-300/25 bg-slate-900/70'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md ${t.witnessed ? 'bg-teal-400/15 text-teal-200' : 'bg-amber-400/15 text-amber-200'} font-semibold">
+                ${escapeHtml(t.category)}
+              </span>
+              ${t.witnessed ? '<span class="text-[11px] text-teal-300">Witnessed</span>' : '<span class="text-[11px] text-slate-400">Unexamined</span>'}
+            </div>
+            <p class="text-sm text-slate-100 mt-1.5 break-words">${escapeHtml(t.text)}</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            ${!t.witnessed ? `<button type="button" data-action="witness" data-id="${t.id}" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-teal-400/15 hover:bg-teal-400/25 text-teal-200 border border-teal-400/30 transition-colors">Witness</button>` : ''}
+            <button type="button" data-action="dissolve" data-id="${t.id}" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">Let Dissolve</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addThought(text, category) {
+      const clean = text.trim();
+      if (!clean) return;
+      state.thoughts.unshift({ id: Date.now() + Math.random(), text: clean, category, witnessed: false });
+      state.stillnessPct = Math.max(20, state.stillnessPct - 4);
+      renderThoughts();
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ---------- Journal ----------
+    function renderJournal() {
+      const list = document.getElementById('journal-list');
+      document.getElementById('journal-count').textContent = `${state.journal.length} ${state.journal.length === 1 ? 'entry' : 'entries'} saved`;
+      if (state.journal.length === 0) {
+        list.innerHTML = '';
+        return;
+      }
+      list.innerHTML = state.journal.slice(0, 5).map(entry => `
+        <div class="flex items-center justify-between gap-3 bg-slate-950/60 border border-slate-800/80 rounded-xl px-3.5 py-2 text-xs">
+          <div class="min-w-0">
+            <span class="text-slate-400 mr-2">${escapeHtml(entry.time)}</span>
+            <span class="text-slate-200">${escapeHtml(entry.text)}</span>
+          </div>
+          <button type="button" data-del-journal="${entry.id}" class="text-slate-500 hover:text-rose-300 shrink-0" aria-label="Remove entry">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function saveJournalStorage() {
+      try {
+        localStorage.setItem('stillness_studio_journal', JSON.stringify(state.journal));
+      } catch (e) {}
+    }
+
+    // ---------- Main Animation Loop ----------
+    let lastFrameTime = performance.now();
+    let animFrameId = null;
+
+    function tick(now) {
+      const dt = Math.min((now - lastFrameTime) / 1000, 0.1);
+      lastFrameTime = now;
+
+      let scaleFactor = 0.52 + Math.sin(now * 0.0012) * 0.04;
+
+      if (state.isRunning) {
+        state.remainingSec = Math.max(0, state.remainingSec - dt);
+        state.phaseElapsed += dt;
+
+        const pattern = PATTERNS[state.patternKey];
+        let phase = pattern.phases[state.phaseIndex];
+
+        if (state.phaseElapsed >= phase.seconds) {
+          state.phaseElapsed -= phase.seconds;
+          state.phaseIndex = (state.phaseIndex + 1) % pattern.phases.length;
+          if (state.phaseIndex === 0) {
+            state.breathsCompleted += 1;
+            state.stillnessPct = Math.min(100, state.stillnessPct + 2);
+          }
+          phase = pattern.phases[state.phaseIndex];
+          playChime(state.phaseIndex === 0 ? 528 : 396);
+        }
+
+        const progress = Math.min(1, state.phaseElapsed / phase.seconds);
+        const eased = 0.5 - 0.5 * Math.cos(Math.PI * progress);
+        scaleFactor = phase.scaleFrom + (phase.scaleTo - phase.scaleFrom) * eased;
+
+        if (state.remainingSec <= 0) {
+          state.isRunning = false;
+          document.getElementById('med-start-text').textContent = 'Start Session';
+          playChime(660);
+          showToast('Meditation session complete.');
+        }
+      }
+
+      if (state.activeTab === 'meditation') {
+        updateMeditationUI(scaleFactor);
+      } else if (state.activeTab === 'consciousness') {
+        drawConsciousnessWaves(now);
+      }
+
+      animFrameId = requestAnimationFrame(tick);
+    }
+
+    // ---------- Event Listeners ----------
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => setTab(btn.dataset.tab));
+    });
+
+    document.getElementById('med-start-btn').addEventListener('click', () => {
+      state.isRunning = !state.isRunning;
+      const startText = document.getElementById('med-start-text');
+      if (state.isRunning) {
+        if (state.remainingSec <= 0) state.remainingSec = state.durationSec;
+        startText.textContent = 'Pause';
+        if (state.soundEnabled) startDrone();
+        playChime(528);
+      } else {
+        startText.textContent = 'Resume';
+        stopDrone();
+      }
+      updateMeditationUI();
+    });
+
+    document.getElementById('med-reset-btn').addEventListener('click', () => {
+      state.isRunning = false;
+      state.remainingSec = state.durationSec;
+      state.phaseIndex = 0;
+      state.phaseElapsed = 0;
+      document.getElementById('med-start-text').textContent = 'Start Session';
+      stopDrone();
+      updateMeditationUI();
+    });
+
+    document.querySelectorAll('.pattern-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.patternKey = btn.dataset.pattern;
+        state.phaseIndex = 0;
+        state.phaseElapsed = 0;
+        document.getElementById('meditation-mode-heading').textContent = PATTERNS[state.patternKey].name;
+        document.querySelectorAll('.pattern-btn').forEach(b => {
+          const active = b.dataset.pattern === state.patternKey;
+          b.className = active
+            ? 'pattern-btn text-left p-3 rounded-xl border border-amber-300/50 bg-amber-400/10 transition-all'
+            : 'pattern-btn text-left p-3 rounded-xl border border-slate-700/70 bg-slate-900/50 hover:border-slate-500 transition-all';
+        });
+        updateMeditationUI();
+      });
+    });
+
+    document.getElementById('duration-select').addEventListener('change', (e) => {
+      state.durationSec = Number(e.target.value);
+      if (!state.isRunning) {
+        state.remainingSec = state.durationSec;
+        updateMeditationUI();
+      }
+    });
+
+    document.getElementById('tone-select').addEventListener('change', (e) => {
+      state.toneMode = e.target.value;
+      if (state.soundEnabled && state.isRunning) startDrone();
+    });
+
+    document.getElementById('sound-toggle-btn').addEventListener('click', () => {
+      state.soundEnabled = !state.soundEnabled;
+      const label = document.getElementById('sound-label');
+      const icon = document.getElementById('sound-icon');
+      if (state.soundEnabled) {
+        label.textContent = 'Sound On';
+        icon.setAttribute('data-lucide', 'volume-2');
+        icon.classList.remove('text-slate-400');
+        icon.classList.add('text-amber-300');
+        if (state.isRunning) startDrone();
+        playChime(528);
+      } else {
+        label.textContent = 'Sound Off';
+        icon.setAttribute('data-lucide', 'volume-x');
+        icon.classList.remove('text-amber-300');
+        icon.classList.add('text-slate-400');
+        stopDrone();
+      }
+      if (window.lucide) lucide.createIcons();
+    });
+
+    document.getElementById('thought-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('thought-input');
+      const cat = document.getElementById('thought-category').value;
+      addThought(input.value, cat);
+      input.value = '';
+    });
+
+    document.querySelectorAll('.sample-thought-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        addThought(btn.dataset.text, btn.dataset.cat);
+      });
+    });
+
+    document.getElementById('thought-stream').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
+      const id = Number(btn.dataset.id);
+      const action = btn.dataset.action;
+      if (action === 'witness') {
+        const item = state.thoughts.find(t => t.id === id);
+        if (item && !item.witnessed) {
+          item.witnessed = true;
+          state.thoughtsWitnessed += 1;
+          state.stillnessPct = Math.min(100, state.stillnessPct + 4);
+          renderThoughts();
+        }
+      } else if (action === 'dissolve') {
+        const card = document.getElementById(`thought-card-${id}`);
+        if (card) card.classList.add('thought-dissolving');
+        setTimeout(() => {
+          const item = state.thoughts.find(t => t.id === id);
+          if (item && !item.witnessed) state.thoughtsWitnessed += 1;
+          state.thoughts = state.thoughts.filter(t => t.id !== id);
+          state.stillnessPct = Math.min(100, state.stillnessPct + 6);
+          playChime(639);
+          renderThoughts();
+        }, 380);
+      }
+    });
+
+    document.getElementById('clear-thoughts-btn').addEventListener('click', () => {
+      if (state.thoughts.length === 0) return;
+      state.thoughtsWitnessed += state.thoughts.length;
+      state.thoughts = [];
+      state.stillnessPct = Math.min(100, state.stillnessPct + 10);
+      playChime(639);
+      renderThoughts();
+      showToast('All thoughts released into stillness.');
+    });
+
+    document.getElementById('consciousness-slider').addEventListener('input', (e) => {
+      updateConsciousnessView(e.target.value);
+    });
+    document.querySelectorAll('.stage-jump, .stage-card').forEach(btn => {
+      btn.addEventListener('click', () => updateConsciousnessView(btn.dataset.depth));
+    });
+
+    document.getElementById('journal-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('journal-input');
+      const text = input.value.trim();
+      if (!text) return;
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      state.journal.unshift({ id: Date.now(), time: timeStr, text });
+      saveJournalStorage();
+      input.value = '';
+      renderJournal();
+      showToast('Insight saved to log.');
+    });
+
+    document.getElementById('journal-list').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-del-journal]');
+      if (!btn) return;
+      const id = Number(btn.dataset.delJournal);
+      state.journal = state.journal.filter(j => j.id !== id);
+      saveJournalStorage();
+      renderJournal();
+    });
+
+    window.addEventListener('resize', () => {
+      resizeMandalaCanvas();
+      resizeWaveCanvas();
+    });
+
+    window.addEventListener('load', () => {
+      if (window.lucide) lucide.createIcons();
+      resizeMandalaCanvas();
+      resizeWaveCanvas();
+      renderThoughts();
+      renderJournal();
+      updateConsciousnessView(state.consciousnessDepth);
+      updateMeditationUI();
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      animFrameId = requestAnimationFrame(tick);
+    });
+  </script>
+</body>
+</html>
