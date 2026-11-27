@@ -319,7 +319,7 @@
         <!-- Live Consciousness Wave & Field Canvas -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
           <div class="lg:col-span-7 bg-slate-950/70 rounded-2xl border border-slate-800/90 p-3 flex flex-col justify-between min-h-[240px]">
-            <canvas id="wave-canvas" class="w-full h-52 sm:h-60 rounded-xl"></canvas>
+            <canvas id="wave-canvas" class="w-full h-52 sm:h-60 rounded-xl
             <div class="flex items-center justify-between px-2 pt-2 text-[11px] text-slate-400">
               <span id="wave-caption-left">Wave Pattern: Coherent Alpha</span>
               <span id="wave-caption-right">Mental Noise: Moderate</span>
@@ -518,7 +518,7 @@
       if (saved) state.journal = JSON.parse(saved);
     } catch (e) {}
 
-    // ---------- Audio Engine (Web Audio API) ----------
+    // ---------- Audio Engine (Web Audio API — Fixed) ----------
     let audioCtx = null;
     let droneOsc1 = null;
     let droneOsc2 = null;
@@ -536,12 +536,19 @@
 
     function stopDrone() {
       try {
-        if (droneGain && audioCtx) {
-          droneGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.2);
+        const oldOsc1 = droneOsc1;
+        const oldOsc2 = droneOsc2;
+        const oldGain = droneGain;
+        droneOsc1 = null;
+        droneOsc2 = null;
+        droneGain = null;
+
+        if (oldGain && audioCtx) {
+          oldGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.15);
         }
         setTimeout(() => {
-          if (droneOsc1) { try { droneOsc1.stop(); } catch (_) {} droneOsc1 = null; }
-          if (droneOsc2) { try { droneOsc2.stop(); } catch (_) {} droneOsc2 = null; }
+          if (oldOsc1) { try { oldOsc1.stop(); } catch (_) {} }
+          if (oldOsc2) { try { oldOsc2.stop(); } catch (_) {} }
         }, 250);
       } catch (_) {}
     }
@@ -555,7 +562,7 @@
       const now = audioCtx.currentTime;
       droneGain = audioCtx.createGain();
       droneGain.gain.setValueAtTime(0.0001, now);
-      droneGain.gain.setTargetAtTime(0.045, now, 0.6);
+      droneGain.gain.setTargetAtTime(0.14, now, 0.4);
       droneGain.connect(audioCtx.destination);
 
       droneOsc1 = audioCtx.createOscillator();
@@ -590,7 +597,7 @@
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, now);
       gain.gain.setValueAtTime(0.001, now);
-      gain.gain.exponentialRampToValueAtTime(0.07, now + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.12, now + 0.04);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -742,7 +749,7 @@
       });
     }
 
-    // ---------- Consciousness Wave Canvas ----------
+     // ---------- Consciousness Wave Canvas ----------
     const waveCanvas = document.getElementById('wave-canvas');
     const waveCtx = waveCanvas.getContext('2d');
 
@@ -927,6 +934,7 @@
         if (state.remainingSec <= 0) {
           state.isRunning = false;
           document.getElementById('med-start-text').textContent = 'Start Session';
+          stopDrone();
           playChime(660);
           showToast('Meditation session complete.');
         }
